@@ -8,7 +8,7 @@ let plazo = document.querySelector('#plazoIn');
 let ciclos = document.querySelector('#renovIn');
 let resultado = document.querySelector('#resultadoIn');
 let btn = document.querySelector('#calcular');
-
+let btnClear = document.querySelector('#clear');
 
 // Variables
 
@@ -51,3 +51,10 @@ function interes(montoInicial, tna, plazo, ciclos)
 };
 
 btn.addEventListener ('click', function(){saveValue();});
+btnClear.addEventListener('click', function(){
+	tna.value = '';
+	montoInicial.value = '';
+	plazo.value = '';
+	ciclos.value = '';
+	resultado.value = '';
+})
