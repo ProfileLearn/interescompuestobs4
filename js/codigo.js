@@ -50,11 +50,11 @@ function interes(montoInicial, tna, plazo, ciclos)
 	}		
 };
 
-btn.addEventListener ('click', function(){saveValue();});
+btn.addEventListener ('click', function(){saveValue()});
 btnClear.addEventListener('click', function(){
 	tna.value = '';
 	montoInicial.value = '';
 	plazo.value = '';
 	ciclos.value = '';
 	resultado.value = '';
-})
+});
