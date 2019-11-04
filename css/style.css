@@ -1,0 +1,56 @@
+.app {	
+	display: flex;
+	flex-direction: column; 
+	margin: 10px auto;
+	padding-top: 10px;
+	background-color: lightgray;
+	border-radius: 4px;
+	
+}
+/*Buscar como sobreescribir la regla bs4 */
+@media (min-width: 820px) {
+	.container, .app {
+		max-width: 780px;
+	}
+}
+
+.botones {
+	
+	line-height: 1.8;
+}
+
+h5{	
+	line-height: 1.8;
+	
+}
+
+@media (max-width: 575px) {
+	.container, .app {
+		max-width: 425px;
+	}
+	.botones, h5 {
+	line-height: 1.5;
+	font-size: 1rem;
+	}
+	
+}
+.fila {
+	
+	
+}
+.pedo {
+
+}
+
+
+
+input {
+	/*border-radius: 4px;
+	line-height: 1.8;*/
+}
+/*@media screen and (max-width: 575px) {
+	input {
+		width: 100%;
+		padding-left: 4%;
+	}
+}*/

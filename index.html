@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="css\style.css" type="text/css">
+
+	<script defer src="js\codigo.js"></script>
+	<title>Interes Compuesto</title>
+</head>
+<body>
+	<main>
+		<article class="container app">
+			<div class="row fila align-items-center no-gutters mt-0">
+				<div class="col-sm-6 pedo text-center mr-1">
+					<h5 class="my-0 shadow rounded">TNA %</h5>
+				</div>
+				<div class="col-sm">
+					<input class="input form-control" type="number" id="tnaIn" value=10>
+				</div>
+			</div>
+			<div class="row fila align-items-center no-gutters mt-1">
+				<div class="col-sm-6 pedo text-center mr-1">
+					<h5 class="my-0 shadow rounded">Monto Inicial</h5>
+				</div>
+				<div class="col-sm">
+					<input class="input form-control" type="number" id="inicialIn" value=1000>
+				</div>	
+			</div>
+			<div class="row fila align-items-center no-gutters mt-1">
+				<div class="col-sm-6 pedo text-center mr-1">
+					<h5 class="my-0 shadow rounded">Plazo en días</h5>
+				</div>
+				<div class="col-sm">
+					<input class="input form-control" type="number" id="plazoIn" value=30>
+				</div>
+			</div>
+			<div class="row fila align-items-center no-gutters mt-1">
+				<div class="col-sm-6 pedo text-center mr-1">
+					<h5 class="my-0 shadow rounded">Renovaciones</h5>
+				</div>
+				<div class="col-sm">
+					<input class="input form-control" type="number" id="renovIn" value=1 min=1>
+				</div>
+			</div>
+			<div class="row fila align-items-center no-gutters mt-2">
+				<div class="col-sm-6 pedo text-center mr-1">
+					<h5 class="my-0 shadow rounded">Resultado</h5>
+				</div>
+				<div class="col-sm">
+					<input class="input form-control" type="number" id="resultadoIn" value=0 readonly>
+				</div>
+			</div>
+			<div class="row my-2 my-sm-1">
+				<div class="col-sm">
+					<button type="button" id="calcular" class="btn btn-success btn-block my-2 botones">Calcular</button>
+				</div>
+				<div class="col-sm">
+					<button type="button" id="clear" class="btn btn-secondary btn-block my-2 botones">Reiniciar</button>
+				</div>
+			</div>	
+		</article>
+	</main>
+</body>
+</html>
