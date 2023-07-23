@@ -95,12 +95,36 @@ function inputHandler(event) {
 	const target = event.target;
 
 	if (id === 'inicialIn' || id === 'adicionalIn') {
-		target.value = target.value.replace(/[^\d,]/g, '')
-		target.value = dotFormat(target.value, true);
+		let entero;
+		let decimal;
+
+		if (target.value.includes(".")) { target.value = target.value.replace(".", ",") }
+
+		if (target.value.includes(",")) {
+			entero = target.value.split(",")[0]
+			decimal = target.value.split(",")[1]
+
+			decimal = decimal.replace(/[^\d,]/g, '')
+			decimal = decimal.replace(/(?<!\d),/g, '')
+			decimal = decimal.replace(/,(?=\d+,)/g, '');
+			decimal = "," + decimal;
+		} else {
+			entero = target.value
+			decimal = "";
+		}
+
+		entero = dotFormat(entero, true);
+
+		target.value = entero + decimal;
+
 	} else if (id === 'tnaIn') {
+
+		if (target.value.includes(".")) { target.value = target.value.replace(".", ",") }
+
 		target.value = target.value.replace(/[^\d,]/g, '')
 		target.value = target.value.replace(/(?<!\d),/g, '')
-		target.value = target.value.replace(/,(?=(\d+)\D)/g, ',')
+		target.value = target.value.replace(/,(?=\d+,)/g, '');
+
 	} else {
 		target.value = target.value.replace(/\D/g, '')
 	}
