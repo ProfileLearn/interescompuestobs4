@@ -55,9 +55,6 @@ function calHandleClick() {
 	render(resultado, retorno)
 }
 
-function keydownHandler(event) {
-
-}
 
 function obtainValues(values) {
 	const objValues = {};
@@ -83,7 +80,7 @@ function dotFormat(text, dinamic = false) {
 
 	const clearText = dinamic ? text.replace(/\./g, '') : text.replace(/\./, ',');
 	const regex = /\B(?=(\d{3})+(?!\d))/g;
-	let retorno = clearText.replace(regex, '.');
+	const retorno = clearText.replace(regex, '.');
 
 	return retorno;
 }
@@ -97,8 +94,6 @@ function inputHandler(event) {
 	if (id === 'inicialIn' || id === 'adicionalIn') {
 		let entero;
 		let decimal;
-
-		if (target.value.includes(".")) { target.value = target.value.replace(".", ",") }
 
 		if (target.value.includes(",")) {
 			entero = target.value.split(",")[0]
@@ -136,6 +131,5 @@ function render(element, value) {
 
 
 document.querySelector('.app').addEventListener('input', inputHandler);
-document.querySelector('.app').addEventListener('keydown', keydownHandler);
 document.querySelector('#calcular').addEventListener('click', calHandleClick);
 document.querySelector('#clear').addEventListener('click', clearHandleClick);
