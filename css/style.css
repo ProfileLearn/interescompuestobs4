@@ -7,7 +7,7 @@
 	border-radius: 4px;
 	
 }
-/*Buscar como sobreescribir la regla bs4 */
+
 @media (min-width: 820px) {
 	.container, .app {
 		max-width: 780px;
