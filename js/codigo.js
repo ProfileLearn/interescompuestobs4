@@ -173,7 +173,7 @@ function tooltipHandler(event) {
 			alert(tooltipsObject.resultadoNeto)
 			break;
 
-		case 'Resultado Neto en un Ciclo más':
+		case 'Resultado Neto en 1 Ciclo más':
 			alert(tooltipsObject.resultadoCiclo)
 			break;
 	
