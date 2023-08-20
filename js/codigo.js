@@ -23,6 +23,20 @@ const domObject = {
 	adicional: document.getElementById('adicionalIn'),
 }
 
+const tooltipsObject = {
+	tna: 'Tasa Nominal Anual. Porcentaje de interés a 365 días, sin tocar la inversión',
+	inicial: 'Monto inicial a invertir',
+	plazo: 'Cantidad de días que dura el ciclo de inversión',
+	ciclos: 'Cantidad de ciclos en que se renueva la inversión',
+	adicional: 'Monto adicional que se agrega en cada ciclo',
+	resultado: 'Monto total al finalizar el último ciclo',
+	resultadoNeto: 'Monto neto al finalizar el último ciclo (Resultado - Monto inicial)',
+	resultadoCiclo: 'Indica una proyección de cuál sería el Monto neto invirtiendo el Monto final (Resultado) después de 1 ciclo más',
+	tea: 'Tasa Efectiva Anual. Porcentaje de interés real basada en plazo y cantidad de ciclos proyectado a 365 días',
+	tet: 'Tasa Efectiva Total. Porcentaje de interés real al final de la inversión'
+}
+
+
 // función que calcula el interés (ver la posibilidad de refactorizarla como función con recursión de cola)
 
 function interes({ montoInicial, tna, plazo, ciclos, adicional }) {
@@ -48,13 +62,6 @@ function textToNumObject(stringObject) {
 }
 
 function calHandleClick() {
-
-	// primero se obtiene las referencias de los campos necesitados (ver si no es más eficiente hacerlo despúes para no ocupar memoria)
-
-	// const inicialIn = document.getElementById('inicialIn');
-
-
-	// const resultadoCiclo = document.getElementById('resultadoCiclo');
 
 	// Se obtienen los valores de obj y se los convierte a números
 
@@ -133,6 +140,47 @@ function dotFormat(text, dinamic = false) {
 	return retorno;
 }
 
+function tooltipHandler(event) {
+	
+	let element;
+
+	if (event.target.textContent === '?') {
+		element = event.target.previousElementSibling.textContent;	
+	} else {return;}
+	
+	
+	switch (element) {
+		case 'TNA %':
+			alert(tooltipsObject.tna)
+			break;
+		case 'Monto Inicial':
+			alert(tooltipsObject.inicial)
+			break;
+		case 'Plazo en días':
+			alert(tooltipsObject.plazo)
+			break;
+		case 'Ciclos':
+			alert(tooltipsObject.ciclos)
+			break;
+		case 'Adicional por Ciclo':
+			alert(tooltipsObject.adicional)
+			break;
+		case 'Resultado':
+			alert(tooltipsObject.resultado)
+			break;
+
+		case 'Resultado Neto':
+			alert(tooltipsObject.resultadoNeto)
+			break;
+
+		case 'Resultado Neto en un Ciclo más':
+			alert(tooltipsObject.resultadoCiclo)
+			break;
+	
+		default:
+			break;
+	}
+}
 
 function inputHandler(event) {
 
@@ -179,5 +227,9 @@ function render(element, value) {
 
 
 document.querySelector('.app').addEventListener('input', inputHandler);
+document.querySelector('.app').addEventListener('click', tooltipHandler);
 document.querySelector('#calcular').addEventListener('click', calHandleClick);
 document.querySelector('#clear').addEventListener('click', clearHandleClick);
+
+
+

@@ -1,11 +1,33 @@
-.app {	
+.app {
 	display: flex;
-	flex-direction: column; 
+	flex-direction: column;
 	margin: 10px auto;
 	padding-top: 10px;
 	background-color: lightgray;
 	border-radius: 4px;
-	
+
+}
+
+.botones {
+
+	line-height: 1.8;
+}
+
+h5 {
+	line-height: 1.8;
+
+}
+
+.tool-tip {
+
+	padding: 0;
+	height: 1.2rem;
+	width: 1.2rem;
+	border-radius: 100%;
+	position: absolute;
+	right: 1rem;
+	box-shadow: 1px 1px 5px #212529;
+	text-shadow: 0.2px 0.2px 1px whitesmoke;
 }
 
 @media (min-width: 820px) {
@@ -14,23 +36,14 @@
 	}
 }
 
-.botones {
-	
-	line-height: 1.8;
-}
-
-h5{	
-	line-height: 1.8;
-	
-}
-
 @media (max-width: 575px) {
 	.container, .app {
 		max-width: 425px;
 	}
+
 	.botones, h5 {
-	line-height: 1.5;
-	font-size: 1rem;
+		line-height: 1.5;
+		font-size: 1rem;
 	}
-	
+
 }
