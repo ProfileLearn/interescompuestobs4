@@ -13,6 +13,9 @@ y un handler para que si se presiona "." se convierta en "," (ok, solo en convie
 La "," luego deberá a ser convertida en "." cuando se convierta string a number ok
 */
 
+import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render } from './methods.js'
+
+
 // Crea un objeto con referencias a los elementos del formulario
 
 const domObject = {
@@ -37,29 +40,8 @@ const tooltipsObject = {
 }
 
 
-// función que calcula el interés (ver la posibilidad de refactorizarla como función con recursión de cola)
-
-function interes({ montoInicial, tna, plazo, ciclos, adicional }) {
-	const tnaPorDia = ((tna / 365) / 100);
-	adicional *= 1;
-	let resParcial = (montoInicial) * ((tnaPorDia * plazo) + 1);
-	resParcial += adicional;
-	if (ciclos > 1) {
-		return interes({ montoInicial: resParcial, tna, plazo, ciclos: ciclos - 1, adicional });
-	}
-	return resParcial;
-};
-
-// Se calcula el neto obtenido restando el monto inicial al resultado final
 
 
-function textToNumObject(stringObject) {
-	for (const prop in stringObject) {
-		stringObject[prop] = textToNum(stringObject[prop]);
-		if (isNaN(stringObject[prop])) { stringObject[prop] = 0 };
-	}
-	return stringObject;
-}
 
 function calHandleClick() {
 
@@ -67,7 +49,7 @@ function calHandleClick() {
 
 	const formValues = obtainDomValues(domObject); // OBJECT CON REFERENCIAS A ELEMENTOS DEL DOM
 	const formNumValues = textToNumObject(formValues); // OBJECT CON NÚMEROS
-	
+
 
 	const retornoResultado = interes(formNumValues)
 	// hasta aquí retornoResultado es number
@@ -77,7 +59,7 @@ function calHandleClick() {
 	const montoInicial = formNumValues.montoInicial;
 	const tna = formNumValues.tna;
 	const plazo = formNumValues.plazo;
-	
+
 
 	const resultadoCicloNum = interes({ montoInicial: retornoResultado, tna: tna, plazo: plazo, ciclos: 1, adicional: 0 });
 	const resultadoCicloNumNet = resultadoCicloNum - retornoResultado;
@@ -87,9 +69,9 @@ function calHandleClick() {
 
 
 	const netResultNum = (retornoResultado - montoInicial);
-	let netResultStr = netResultNum.toFixed(2); 
+	let netResultStr = netResultNum.toFixed(2);
 	netResultStr = dotFormat(netResultStr);
-	
+
 
 	// let retornoResultadoCiclo = interes(values)
 	// // hasta aquí retornoResultadoCiclo es number
@@ -107,129 +89,13 @@ function calHandleClick() {
 }
 
 
-function obtainDomValues(values) {
-	const objValues = {};
-	for (const prop in values) {
-		objValues[prop] = values[prop].value;
-	}
-	return objValues;
-}
 
-function clearHandleClick() {
-	for (const prop in obj) {
-		obj[prop].value = "";
-	}
-}
-
-// pasa texto a número y elimina los puntos
-
-function textToNum(text) {
-	const transitionText = text.replace(/\./g, '')
-	const number = Number.parseFloat(transitionText);
-	return number;
-}
-
-// formatea los números a texto con (.) como separador de miles
-
-function dotFormat(text, dinamic = false) {
-
-	const clearText = dinamic ? text.replace(/\./g, '') : text.replace(/\./, ',');
-	const regex = /\B(?=(\d{3})+(?!\d))/g;
-	const retorno = clearText.replace(regex, '.');
-
-	return retorno;
-}
-
-function tooltipHandler(event) {
-	
-	let element;
-
-	if (event.target.textContent === '?') {
-		element = event.target.previousElementSibling.textContent;	
-	} else {return;}
-	
-	
-	switch (element) {
-		case 'TNA %':
-			alert(tooltipsObject.tna)
-			break;
-		case 'Monto Inicial':
-			alert(tooltipsObject.inicial)
-			break;
-		case 'Plazo en días':
-			alert(tooltipsObject.plazo)
-			break;
-		case 'Ciclos':
-			alert(tooltipsObject.ciclos)
-			break;
-		case 'Adicional por Ciclo':
-			alert(tooltipsObject.adicional)
-			break;
-		case 'Resultado':
-			alert(tooltipsObject.resultado)
-			break;
-
-		case 'Resultado Neto':
-			alert(tooltipsObject.resultadoNeto)
-			break;
-
-		case 'Resultado Neto en 1 Ciclo más':
-			alert(tooltipsObject.resultadoCiclo)
-			break;
-	
-		default:
-			break;
-	}
-}
-
-function inputHandler(event) {
-
-	const id = event.target.id;
-	const target = event.target;
-
-	if (id === 'inicialIn' || id === 'adicionalIn') {
-		let entero;
-		let decimal;
-
-		if (target.value.includes(",")) {
-			entero = target.value.split(",")[0]
-			decimal = target.value.split(",")[1]
-
-			decimal = decimal.replace(/[^\d,]/g, '')
-			decimal = decimal.replace(/(?<!\d),/g, '')
-			decimal = decimal.replace(/,(?=\d+,)/g, '');
-			decimal = "," + decimal;
-		} else {
-			entero = target.value
-			decimal = "";
-		}
-
-		entero = dotFormat(entero, true);
-
-		target.value = entero + decimal;
-
-	} else if (id === 'tnaIn') {
-
-		if (target.value.includes(".")) { target.value = target.value.replace(".", ",") }
-
-		target.value = target.value.replace(/[^\d,]/g, '')
-		target.value = target.value.replace(/(?<!\d),/g, '')
-		target.value = target.value.replace(/,(?=\d+,)/g, '');
-
-	} else {
-		target.value = target.value.replace(/\D/g, '')
-	}
-}
-
-function render(element, value) {
-	element.value = value;
-}
 
 
 document.querySelector('.app').addEventListener('input', inputHandler);
 document.querySelector('.app').addEventListener('click', tooltipHandler);
 document.querySelector('#calcular').addEventListener('click', calHandleClick);
-document.querySelector('#clear').addEventListener('click', clearHandleClick);
+document.querySelector('#clear').addEventListener('click', () => clear(domObject));
 
 
 
