@@ -13,7 +13,7 @@ y un handler para que si se presiona "." se convierta en "," (ok, solo en convie
 La "," luego deberá a ser convertida en "." cuando se convierta string a number ok
 */
 
-import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render } from './methods.js'
+import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render, numAjustado } from './methods.js'
 
 
 // Crea un objeto con referencias a los elementos del formulario
@@ -24,14 +24,16 @@ const domObject = {
 	plazo: document.getElementById('plazoIn'),
 	ciclos: document.getElementById('ciclosIn'),
 	adicional: document.getElementById('adicionalIn'),
+	inflacion: document.getElementById('inflacionIn')
 }
 
-const tooltipsObject = {
+export const tooltipsObject = {
 	tna: 'Tasa Nominal Anual. Porcentaje de interés a 365 días, sin tocar la inversión',
 	inicial: 'Monto inicial a invertir',
 	plazo: 'Cantidad de días que dura el ciclo de inversión',
 	ciclos: 'Cantidad de ciclos en que se renueva la inversión',
 	adicional: 'Monto adicional que se agrega en cada ciclo',
+	ita: 'Inflación Total Acumulada al terminar el último ciclo (estimación)',
 	resultado: 'Monto total al finalizar el último ciclo',
 	resultadoNeto: 'Monto neto al finalizar el último ciclo (Resultado - Monto inicial)',
 	resultadoCiclo: 'Indica una proyección de cuál sería el Monto neto invirtiendo el Monto final (Resultado) después de 1 ciclo más',
@@ -50,9 +52,15 @@ function calHandleClick() {
 	const formValues = obtainDomValues(domObject); // OBJECT CON REFERENCIAS A ELEMENTOS DEL DOM
 	const formNumValues = textToNumObject(formValues); // OBJECT CON NÚMEROS
 
+	const inflacion = formNumValues.inflacion;
 
-	const retornoResultado = interes(formNumValues)
+	let retornoResultado = interes(formNumValues);
+
+	retornoResultado = numAjustado(inflacion, retornoResultado)
+
 	// hasta aquí retornoResultado es number
+	
+
 	let retornoResultadoString = retornoResultado.toFixed(2); // aquí se convierte a strings
 	retornoResultadoString = dotFormat(retornoResultadoString);
 
@@ -60,6 +68,7 @@ function calHandleClick() {
 	const tna = formNumValues.tna;
 	const plazo = formNumValues.plazo;
 
+	
 
 	const resultadoCicloNum = interes({ montoInicial: retornoResultado, tna: tna, plazo: plazo, ciclos: 1, adicional: 0 });
 	const resultadoCicloNumNet = resultadoCicloNum - retornoResultado;
@@ -69,14 +78,12 @@ function calHandleClick() {
 
 
 	const netResultNum = (retornoResultado - montoInicial);
+
+	
+
 	let netResultStr = netResultNum.toFixed(2);
 	netResultStr = dotFormat(netResultStr);
 
-
-	// let retornoResultadoCiclo = interes(values)
-	// // hasta aquí retornoResultadoCiclo es number
-	// retornoResultadoCiclo = retornoResultadoCiclo.toFixed(2); // aquí se convierte a strings
-	// retornoResultadoCiclo = dotFormat(retorno);
 
 	const resultado = document.getElementById('resultadoIn');
 	const resultadoNeto = document.getElementById('resultadoNeto');
@@ -94,6 +101,11 @@ function calHandleClick() {
 
 document.querySelector('.app').addEventListener('input', inputHandler);
 document.querySelector('.app').addEventListener('click', tooltipHandler);
+document.getElementById('advance-options').addEventListener('click', (e) => {
+	resultadoCiclo.parentNode.parentNode.classList.toggle('oculto');
+	domObject.inflacion.value = "";
+	domObject.inflacion.parentNode.parentNode.classList.toggle('oculto');
+})
 document.querySelector('#calcular').addEventListener('click', calHandleClick);
 document.querySelector('#clear').addEventListener('click', () => clear(domObject));
 

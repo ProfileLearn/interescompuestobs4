@@ -1,3 +1,5 @@
+import { tooltipsObject } from "./index.js";
+
 // función que calcula el interés (ver la posibilidad de refactorizarla como función con recursión de cola)
 
 export function interes({ montoInicial, tna, plazo, ciclos, adicional }) {
@@ -80,6 +82,9 @@ export function tooltipHandler(event) {
     case 'Adicional por Ciclo':
       alert(tooltipsObject.adicional)
       break;
+    case 'Inflación Acumulada %':
+      alert(tooltipsObject.ita)
+      break;
     case 'Resultado':
       alert(tooltipsObject.resultado)
       break;
@@ -88,7 +93,7 @@ export function tooltipHandler(event) {
       alert(tooltipsObject.resultadoNeto)
       break;
 
-    case 'Resultado Neto en 1 Ciclo más':
+    case 'Retorno Posterior por Ciclo':
       alert(tooltipsObject.resultadoCiclo)
       break;
 
@@ -163,12 +168,45 @@ export function inputHandler(event) {
     retorno = retorno.replace(/[^\d,]/g, '');
 
 
+  } else if (id === 'inflacionIn') {
+
+    retorno = retorno.replace(".", ",")
+
+    let entero;
+    let decimal;
+
+    if (retorno.includes(",")) {
+
+      entero = retorno.split(",")[0];
+      decimal = retorno.split(",")[1];
+
+      decimal = decimal.replace(".", "");
+
+      decimal = "," + decimal.slice(0, 2);
+
+    } else {
+
+      entero = retorno;
+
+    }
+
+    //elimina todo lo que no sea un número o una coma de decimal
+
+    retorno = decimal ? entero + decimal : entero;
+
+    retorno = retorno.replace(/[^\d,]/g, '');
+
+
   } else {
     retorno = retorno.replace(/\D/g, '')
   }
 
   target.value = retorno;
 
+}
+
+export function numAjustado(ita = 0, num) {
+  return num / (1 + (ita / 100));
 }
 
 export function render(element, value) {
