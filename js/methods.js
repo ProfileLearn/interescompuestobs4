@@ -13,6 +13,16 @@ export function interes({ montoInicial, tna, plazo, ciclos, adicional }) {
   return resParcial;
 };
 
+export function teayt(tna, plazo, ciclos) {
+  // fórmula = (((1+((tna÷100)÷(días_del_año / plazo)))^ciclos)−1)×100
+
+  const tea = 100 * (Math.pow(1 + ((tna / 100) / 12), 12) - 1)
+
+  const tet = 100 * (Math.pow(1 + ((tna / 100) / (365 / plazo)), ciclos) - 1)
+
+  return { tea, tet }
+}
+
 // Se calcula el neto obtenido restando el monto inicial al resultado final
 
 // pasa texto a número y elimina los puntos
@@ -153,7 +163,7 @@ export function inputHandler(event) {
 
       decimal = decimal.replace(".", "");
 
-      decimal = "," + decimal.slice(0,2);
+      decimal = "," + decimal.slice(0, 2);
 
     } else {
 
@@ -203,6 +213,14 @@ export function inputHandler(event) {
 
   target.value = retorno;
 
+}
+
+export function rendimiento(ita, tet) {
+  const porcentajeIta = ita / 100;
+
+  const porcentajeTet = tet / 100;
+
+  return (((1 + porcentajeTet) / (1 + porcentajeIta)) - 1) * 100
 }
 
 export function numAjustado(ita = 0, num) {

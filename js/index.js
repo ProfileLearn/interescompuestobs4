@@ -13,7 +13,7 @@ y un handler para que si se presiona "." se convierta en "," (ok, solo en convie
 La "," luego deberá a ser convertida en "." cuando se convierta string a number ok
 */
 
-import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render, numAjustado } from './methods.js'
+import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render, numAjustado, teayt, rendimiento } from './methods.js'
 
 
 // Crea un objeto con referencias a los elementos del formulario
@@ -41,8 +41,7 @@ export const tooltipsObject = {
 	tet: 'Tasa Efectiva Total. Porcentaje de interés real al final de la inversión'
 }
 
-
-
+const porcentajes = {};
 
 
 function calHandleClick() {
@@ -54,12 +53,21 @@ function calHandleClick() {
 
 	const inflacion = formNumValues.inflacion;
 
+	porcentajes.tasasEfectivas = teayt(formNumValues.tna, formNumValues.plazo, formNumValues.ciclos);
+
+	porcentajes.tasasEfectivas.tea = (porcentajes.tasasEfectivas.tea).toFixed(2)
+	porcentajes.tasasEfectivas.tet = (porcentajes.tasasEfectivas.tet).toFixed(2)
+
+	porcentajes.rendimientoInversion = rendimiento(formNumValues.inflacion, porcentajes.tasasEfectivas.tet).toFixed(2);
+
+	console.log(porcentajes)
+
 	let retornoResultado = interes(formNumValues);
 
 	retornoResultado = numAjustado(inflacion, retornoResultado)
 
 	// hasta aquí retornoResultado es number
-	
+
 
 	let retornoResultadoString = retornoResultado.toFixed(2); // aquí se convierte a strings
 	retornoResultadoString = dotFormat(retornoResultadoString);
@@ -68,7 +76,7 @@ function calHandleClick() {
 	const tna = formNumValues.tna;
 	const plazo = formNumValues.plazo;
 
-	
+
 
 	const resultadoCicloNum = interes({ montoInicial: retornoResultado, tna: tna, plazo: plazo, ciclos: 1, adicional: 0 });
 	const resultadoCicloNumNet = resultadoCicloNum - retornoResultado;
@@ -79,7 +87,7 @@ function calHandleClick() {
 
 	const netResultNum = (retornoResultado - montoInicial);
 
-	
+
 
 	let netResultStr = netResultNum.toFixed(2);
 	netResultStr = dotFormat(netResultStr);
@@ -101,13 +109,37 @@ function calHandleClick() {
 
 document.querySelector('.app').addEventListener('input', inputHandler);
 document.querySelector('.app').addEventListener('click', tooltipHandler);
-document.getElementById('advance-options').addEventListener('click', (e) => {
-	resultadoCiclo.parentNode.parentNode.classList.toggle('oculto');
+document.getElementById('advance-options').addEventListener('change', (event) => {
+
 	domObject.inflacion.value = "";
-	domObject.inflacion.parentNode.parentNode.classList.toggle('oculto');
+
+	if (!event.target.checked) {
+		resultadoCiclo.parentNode.parentNode.classList.add('oculto');
+
+		domObject.inflacion.parentNode.parentNode.classList.add('oculto');
+
+		document.getElementById('ver-mas').parentNode.parentNode.classList.add('oculto');
+
+		const manualCalculate = new Event('click');
+
+		document.getElementById('calcular').dispatchEvent(manualCalculate);
+
+	} else {
+		resultadoCiclo.parentNode.parentNode.classList.remove('oculto');
+		domObject.inflacion.parentNode.parentNode.classList.remove('oculto');
+		document.getElementById('ver-mas').parentNode.parentNode.classList.remove('oculto');
+
+	}
+
 })
-document.querySelector('#calcular').addEventListener('click', calHandleClick);
-document.querySelector('#clear').addEventListener('click', () => clear(domObject));
+
+document.getElementById('ver-mas').addEventListener('click', () => {
+	alert
+		(`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${domObject.ciclos.value} ciclos: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
+});
+
+document.getElementById('calcular').addEventListener('click', calHandleClick);
+document.getElementById('clear').addEventListener('click', () => clear(domObject));
 
 
 
