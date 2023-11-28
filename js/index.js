@@ -55,12 +55,10 @@ function calHandleClick() {
 
 	porcentajes.tasasEfectivas = teayt(formNumValues.tna, formNumValues.plazo, formNumValues.ciclos);
 
-	porcentajes.tasasEfectivas.tea = (porcentajes.tasasEfectivas.tea).toFixed(2)
-	porcentajes.tasasEfectivas.tet = (porcentajes.tasasEfectivas.tet).toFixed(2)
-
 	porcentajes.rendimientoInversion = rendimiento(formNumValues.inflacion, porcentajes.tasasEfectivas.tet).toFixed(2);
 
-	console.log(porcentajes)
+	porcentajes.tasasEfectivas.tea = (porcentajes.tasasEfectivas.tea).toFixed(2)
+	porcentajes.tasasEfectivas.tet = (porcentajes.tasasEfectivas.tet).toFixed(2)
 
 	let retornoResultado = interes(formNumValues);
 
@@ -120,9 +118,13 @@ document.getElementById('advance-options').addEventListener('change', (event) =>
 
 		document.getElementById('ver-mas').parentNode.parentNode.classList.add('oculto');
 
-		const manualCalculate = new Event('click');
+		if (domObject.tna.value && domObject.plazo.value && domObject.ciclos.value && domObject.montoInicial.value) {
 
-		document.getElementById('calcular').dispatchEvent(manualCalculate);
+			const manualCalculate = new Event('click');
+
+			document.getElementById('calcular').dispatchEvent(manualCalculate);
+		}
+
 
 	} else {
 		resultadoCiclo.parentNode.parentNode.classList.remove('oculto');
