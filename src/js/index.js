@@ -137,7 +137,7 @@ document.getElementById('advance-options').addEventListener('change', (event) =>
 
 document.getElementById('ver-mas').addEventListener('click', () => {
 	alert
-		(`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${domObject.ciclos.value} ciclos: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
+		(`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${domObject.ciclos.value} ciclos de ${domObject.plazo.value} días: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
 });
 
 document.getElementById('calcular').addEventListener('click', calHandleClick);
