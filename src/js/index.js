@@ -1,16 +1,6 @@
 /* 
-PRIMERO TRABAJAR LOS CAMPOS COMO STRING ok
-APLICAR REGEX EN TIEMPO REAL MIENTRAS SE INGRESAN LOS DATOS ok
-CONVERTIR LOS STRINGS EN NUMEROS PARA PASARLE A LA FUNCIÓN DE CALCULOS ok
-SEPARAR LA FUNCION DE RENDERIZADO DE LA DEL CALCULO ok
-QUITAR resultado de obj ok
-CONVERTIR ESOS NÚMEROS NUEVAMENTE A STRING PARA MOSTRAR EN EL INPUT DE RESULTADO ok
-Unificar las funciones dotseparation ok
-Revisar que los datos se conviertan a tipo number antes de llamar a funcion interes ok
-Agregar manejador de "," (comas en el formulario) ok
-Cuando se permita agregar un handler para que se pueda usar en el porcentaje 
-y un handler para que si se presiona "." se convierta en "," (ok, solo en convierte punto por coma en el porcentaje)
-La "," luego deberá a ser convertida en "." cuando se convierta string a number ok
+No declarar tantas veces las mismas variables o referencias al DOM
+Refactorizar
 */
 
 import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render, numAjustado, teayt, rendimiento } from './methods.js'
@@ -136,8 +126,16 @@ document.getElementById('advance-options').addEventListener('change', (event) =>
 })
 
 document.getElementById('ver-mas').addEventListener('click', () => {
-	alert
-		(`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${domObject.ciclos.value} ciclos de ${domObject.plazo.value} días: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
+
+	if (document.getElementById('resultadoIn').value) {
+
+		alert
+			(`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${domObject.ciclos.value} ciclos de ${domObject.plazo.value} días: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
+
+	} else {
+		alert('Debes hacer un cálculo primero')
+	}
+
 });
 
 document.getElementById('calcular').addEventListener('click', calHandleClick);
