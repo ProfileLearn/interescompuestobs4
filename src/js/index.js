@@ -3,18 +3,32 @@ No declarar tantas veces las mismas variables o referencias al DOM
 Refactorizar
 */
 
-import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render, numAjustado, teayt, rendimiento } from './methods.js'
+import { interes, textToNumObject, obtainDomValues, clear, dotFormat, tooltipHandler, inputHandler, render, numAjustado, teayt, rendimiento, handleViewMore } from './methods.js'
 
 
-// Crea un objeto con referencias a los elementos del formulario
+// Crea objetos con referencias a los elementos del formulario
 
-const domObject = {
+const primaryDomObject = {
 	tna: document.getElementById('tnaIn'),
 	montoInicial: document.getElementById('inicialIn'),
 	plazo: document.getElementById('plazoIn'),
 	ciclos: document.getElementById('ciclosIn'),
 	adicional: document.getElementById('adicionalIn'),
 	inflacion: document.getElementById('inflacionIn')
+}
+
+const secDomObject = {
+	appForm: document.getElementsByClassName('app')[0],
+	advanceOptions: document.getElementById('advance-options'),
+	viewMore: document.getElementById('ver-mas'),
+	calculate: document.getElementById('calcular'),
+	clear: document.getElementById('clear')
+}
+
+const thrDomObject = {
+	resultado: document.getElementById('resultadoIn'),
+	resultadoNeto: document.getElementById('resultadoNeto'),
+	resultadoCiclo: document.getElementById('resultadoCiclo')
 }
 
 export const tooltipsObject = {
@@ -38,7 +52,7 @@ function calHandleClick() {
 
 	// Se obtienen los valores de obj y se los convierte a números
 
-	const formValues = obtainDomValues(domObject); // OBJECT CON REFERENCIAS A ELEMENTOS DEL DOM
+	const formValues = obtainDomValues(primaryDomObject); // OBJECT CON REFERENCIAS A ELEMENTOS DEL DOM
 	const formNumValues = textToNumObject(formValues); // OBJECT CON NÚMEROS
 
 	const inflacion = formNumValues.inflacion;
@@ -81,65 +95,46 @@ function calHandleClick() {
 	netResultStr = dotFormat(netResultStr);
 
 
-	const resultado = document.getElementById('resultadoIn');
-	const resultadoNeto = document.getElementById('resultadoNeto');
-	const resultadoCiclo = document.getElementById('resultadoCiclo');
-
-
-	render(resultado, retornoResultadoString);
-	render(resultadoNeto, netResultStr);
-	render(resultadoCiclo, resultadoCicloNumStr);
+	render(thrDomObject.resultado, retornoResultadoString);
+	render(thrDomObject.resultadoNeto, netResultStr);
+	render(thrDomObject.resultadoCiclo, resultadoCicloNumStr);
 }
 
 
+secDomObject.appForm.addEventListener('input', inputHandler);
+secDomObject.appForm.addEventListener('click', tooltipHandler);
+secDomObject.advanceOptions.addEventListener('change', (event) => {
 
-
-
-document.querySelector('.app').addEventListener('input', inputHandler);
-document.querySelector('.app').addEventListener('click', tooltipHandler);
-document.getElementById('advance-options').addEventListener('change', (event) => {
-
-	domObject.inflacion.value = "";
+	primaryDomObject.inflacion.value = "";
 
 	if (!event.target.checked) {
 		resultadoCiclo.parentNode.parentNode.classList.add('oculto');
 
-		domObject.inflacion.parentNode.parentNode.classList.add('oculto');
+		primaryDomObject.inflacion.parentNode.parentNode.classList.add('oculto');
 
-		document.getElementById('ver-mas').parentNode.parentNode.classList.add('oculto');
+		secDomObject.viewMore.parentNode.parentNode.classList.add('oculto');
 
-		if (domObject.tna.value && domObject.plazo.value && domObject.ciclos.value && domObject.montoInicial.value) {
+		if (primaryDomObject.tna.value && primaryDomObject.plazo.value && primaryDomObject.ciclos.value && primaryDomObject.montoInicial.value) {
 
 			const manualCalculate = new Event('click');
 
-			document.getElementById('calcular').dispatchEvent(manualCalculate);
+			secDomObject.calculate.dispatchEvent(manualCalculate);
 		}
 
 
 	} else {
 		resultadoCiclo.parentNode.parentNode.classList.remove('oculto');
-		domObject.inflacion.parentNode.parentNode.classList.remove('oculto');
-		document.getElementById('ver-mas').parentNode.parentNode.classList.remove('oculto');
+		primaryDomObject.inflacion.parentNode.parentNode.classList.remove('oculto');
+		secDomObject.viewMore.parentNode.parentNode.classList.remove('oculto');
 
 	}
 
 })
 
-document.getElementById('ver-mas').addEventListener('click', () => {
+secDomObject.viewMore.addEventListener('click', () => handleViewMore(thrDomObject.resultado, porcentajes, primaryDomObject));
 
-	if (document.getElementById('resultadoIn').value) {
-
-		alert
-			(`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${domObject.ciclos.value} ciclos de ${domObject.plazo.value} días: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
-
-	} else {
-		alert('Debes hacer un cálculo primero')
-	}
-
-});
-
-document.getElementById('calcular').addEventListener('click', calHandleClick);
-document.getElementById('clear').addEventListener('click', () => clear(domObject));
+secDomObject.calculate.addEventListener('click', calHandleClick);
+secDomObject.clear.addEventListener('click', () => clear(primaryDomObject));
 
 
 

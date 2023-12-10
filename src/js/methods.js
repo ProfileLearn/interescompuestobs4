@@ -112,6 +112,18 @@ export function tooltipHandler(event) {
   }
 }
 
+export function handleViewMore(resultado, porcentajes, primaryDomObject) {
+  
+  if (resultado.value) {
+
+  	alert
+      (`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${primaryDomObject.ciclos.value} ciclos de ${primaryDomObject.plazo.value} días: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
+
+  } else {
+  	alert('Debes hacer un cálculo primero')
+  }
+}
+
 export function inputHandler(event) {
 
   const id = event.target.id;
