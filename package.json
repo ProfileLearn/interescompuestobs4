@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "replace": "^1.2.2",
+    "uglify-js": "^3.17.4"
+  },
+  "scripts": {
+    "create:folders": "mkdir -p dist/js && mkdir -p dist/css",
+    "copy:html": "cp ./index.html dist/index.html",
+    "minify:js": "uglifyjs ./src/js/index.js -o dist/js/index.min.js -m && uglifyjs ./src/js/methods.js -o dist/js/methods.min.js -m",
+    "clean:css": "cleancss -o dist/css/style.min.css ./src/css/style.css",
+    "update:html": "replace './src/js/index.js' './js/index.min.js' dist/index.html && replace './src/css/style.css' './css/style.min.css' dist/index.html",
+    "update:js": "replace './methods.js' './methods.min.js' ./dist/js/index.min.js && replace './index.js' './index.min.js' ./dist/js/methods.min.js",
+    "build": "npm run create:folders && npm run copy:html && npm run minify:js && npm run clean:css && npm run update:html && npm run update:js"
+  }
+}
