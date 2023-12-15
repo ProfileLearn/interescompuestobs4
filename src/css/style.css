@@ -1,3 +1,8 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
 .app {
 	display: flex;
 	flex-direction: column;
@@ -8,14 +13,24 @@
 
 }
 
+.row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
 .botones {
 
 	line-height: 1.8;
 }
 
-h5 {
-	line-height: 1.8;
+h1 {
+	line-height: 1;
+	font-size: 1.3rem;
+}
 
+h3 {
+	line-height: 1.8;
+	font-size: 1.25rem;
 }
 
 .tool-tip {
@@ -45,9 +60,21 @@ h5 {
 		max-width: 425px;
 	}
 
-	.botones, h5 {
+	.botones, h3 {
 		line-height: 1.5;
 		font-size: 1rem;
+	}
+
+	h1 {
+		font-size: 1.1rem;
+	}
+
+	@media (max-width: 780px) {
+		.app {
+			margin: 0;
+			padding: 0.5rem 0.5rem 0 0.5rem;
+			width: 100%;
+		}
 	}
 
 }

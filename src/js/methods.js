@@ -28,7 +28,8 @@ export function teayt(tna, plazo, ciclos) {
 // pasa texto a número y elimina los puntos
 
 function textToNum(text) {
-  const transitionText = text.replace(/\./g, '')
+  let transitionText = text.replace(/\./g, '')
+  transitionText = transitionText.replace(',', '.')
   const number = Number.parseFloat(transitionText);
   return number;
 }
@@ -44,8 +45,11 @@ export function textToNumObject(stringObject) {
 export function obtainDomValues(values) {
   const objValues = {};
   for (const prop in values) {
+
     objValues[prop] = values[prop].value;
+
   }
+  
   return objValues;
 }
 
@@ -113,14 +117,14 @@ export function tooltipHandler(event) {
 }
 
 export function handleViewMore(resultado, porcentajes, primaryDomObject) {
-  
+
   if (resultado.value) {
 
-  	alert
+    alert
       (`Tasa Efectiva Anual: ${porcentajes.tasasEfectivas.tea} %\nTasa Efectiva Total x ${primaryDomObject.ciclos.value} ciclos de ${primaryDomObject.plazo.value} días: ${porcentajes.tasasEfectivas.tet} %\nRendimiento Ajustado: ${porcentajes.rendimientoInversion} %`)
 
   } else {
-  	alert('Debes hacer un cálculo primero')
+    alert('Debes hacer un cálculo primero')
   }
 }
 
@@ -188,7 +192,6 @@ export function inputHandler(event) {
     retorno = decimal ? entero + decimal : entero;
 
     retorno = retorno.replace(/[^\d,]/g, '');
-
 
   } else if (id === 'inflacionIn') {
 

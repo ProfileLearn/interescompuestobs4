@@ -53,6 +53,7 @@ function calHandleClick() {
 	// Se obtienen los valores de obj y se los convierte a números
 
 	const formValues = obtainDomValues(primaryDomObject); // OBJECT CON REFERENCIAS A ELEMENTOS DEL DOM
+
 	const formNumValues = textToNumObject(formValues); // OBJECT CON NÚMEROS
 
 	const inflacion = formNumValues.inflacion;
