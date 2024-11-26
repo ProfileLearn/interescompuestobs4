@@ -5,6 +5,7 @@
     "uglify-js": "^3.17.4"
   },
   "scripts": {
+    "quicklypush": "git add . && git commit -m 'quicklypush' && git push",
     "create:folders": "mkdir -p dist/js && mkdir -p dist/css",
     "copy:html": "cp ./index.html dist/index.html && cp ./favicon.ico ./dist/favicon.ico",
     "minify:js": "uglifyjs ./src/js/index.js -o dist/js/index.min.js -m && uglifyjs ./src/js/methods.js -o dist/js/methods.min.js -m",
