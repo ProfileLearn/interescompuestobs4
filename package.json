@@ -13,6 +13,6 @@
     "update:html": "replace './src/js/index.js' './js/index.min.js' dist/index.html && replace './src/css/style.css' './css/style.min.css' dist/index.html",
     "update:js": "replace \"./utils/calcMethods.js\" \"./utils/calcMethods.min.js\" dist/js/index.min.js && replace \"./utils/parser.js\" \"./utils/parser.min.js\" dist/js/index.min.js && replace \"./parser.js\" \"./parser.min.js\" dist/js/utils/eventsHandlers.min.js && replace \"./utils/eventsHandlers.js\" \"./utils/eventsHandlers.min.js\" dist/js/index.min.js && replace \"./assets/tooltipsObject.js\" \"./assets/tooltipsObject.min.js\" dist/js/index.min.js dist/js/utils/eventsHandlers.min.js && replace \"./utils/urlParams.js\" \"./utils/urlParams.min.js\" dist/js/index.min.js",
     "build": "npm run create:folders && npm run copy:html && npm run minify:js && npm run clean:css && npm run update:html && npm run update:js || ( echo 'Error: No se pudo crear la estructura de carpetas' && exit 1)",
-    "production:deploy": "npm run quickly-push && npm run build &&"
+    "production:deploy": "npm run quickly-push && npm run build"
   }
 }
