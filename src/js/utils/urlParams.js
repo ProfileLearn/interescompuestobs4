@@ -22,9 +22,14 @@ export function getUrlParams() {
   const params = new URLSearchParams(window.location.search);
   const obj = {};
   for (let key of params.keys()) {
-    obj[key] = params.get(key);
+
+    if (params.get(key) != '0') {
+
+      obj[key] = params.get(key);
+    }
+
   }
 
-  console.log(obj);
+  
   return obj;
 }

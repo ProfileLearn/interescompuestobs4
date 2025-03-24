@@ -129,14 +129,17 @@ secDomObject.advanceOptions.addEventListener('change', (event) => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+	
 	const params = getUrlParams();
 
 	if (params.tna) {
 		primaryDomObject.tna.value = params.tna;
+
 	}
 
-	if (params.inicial) {
-		primaryDomObject.montoInicial.value = params.inicial;
+	if (params.montoInicial) {
+		primaryDomObject.montoInicial.value = params.montoInicial;
+		
 	}
 
 	if (params.plazo) {
@@ -159,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-	if (params.tna && params.plazo && params.ciclos && params.inicial) {
+	if (params.tna && params.plazo && params.ciclos && params.montoInicial) {
 		const manualCalculate = new Event('click');
 		secDomObject.calculate.dispatchEvent(manualCalculate);
 	}
