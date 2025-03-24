@@ -3,8 +3,9 @@ No declarar tantas veces las mismas variables o referencias al DOM
 Refactorizar
 */
 
-import { interes, obtainDomValues, clear, tooltipHandler, inputHandler, render, numAjustado, teayt, rendimiento, handleViewMore } from './methods.js'
+import { interes, render, numAjustado, teayt, rendimiento } from './methods.js'
 import { dotFormat, textToNumObject } from './utils/parser.js'
+import { obtainDomValues, tooltipHandler, handleViewMore, clear, inputHandler } from './utils/events_handlers.js'
 
 
 // Crea objetos con referencias a los elementos del formulario
