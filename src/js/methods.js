@@ -1,4 +1,5 @@
-import { tooltipsObject } from "./index.js";
+import { tooltipsObject } from "./assets/tooltips_object.js";
+import { dotFormat } from "./utils/parser.js";
 
 // función que calcula el interés (ver la posibilidad de refactorizarla como función con recursión de cola)
 
@@ -27,20 +28,20 @@ export function teayt(tna, plazo, ciclos) {
 
 // pasa texto a número y elimina los puntos
 
-function textToNum(text) {
-  let transitionText = text.replace(/\./g, '')
-  transitionText = transitionText.replace(',', '.')
-  const number = Number.parseFloat(transitionText);
-  return number;
-}
+// function textToNum(text) {
+//   let transitionText = text.replace(/\./g, '')
+//   transitionText = transitionText.replace(',', '.')
+//   const number = Number.parseFloat(transitionText);
+//   return number;
+// }
 
-export function textToNumObject(stringObject) {
-  for (const prop in stringObject) {
-    stringObject[prop] = textToNum(stringObject[prop]);
-    if (isNaN(stringObject[prop])) { stringObject[prop] = 0 };
-  }
-  return stringObject;
-}
+// export function textToNumObject(stringObject) {
+//   for (const prop in stringObject) {
+//     stringObject[prop] = textToNum(stringObject[prop]);
+//     if (isNaN(stringObject[prop])) { stringObject[prop] = 0 };
+//   }
+//   return stringObject;
+// }
 
 export function obtainDomValues(values) {
   const objValues = {};
@@ -62,14 +63,14 @@ export function clear(obj) {
 
 // formatea los números a texto con (.) como separador de miles
 
-export function dotFormat(text, dinamic = false) {
+// export function dotFormat(text, dinamic = false) {
 
-  const clearText = dinamic ? text.replace(/\./g, '') : text.replace(/\./, ',');
-  const regex = /\B(?=(\d{3})+(?!\d))/g;
-  const retorno = clearText.replace(regex, '.');
+//   const clearText = dinamic ? text.replace(/\./g, '') : text.replace(/\./, ',');
+//   const regex = /\B(?=(\d{3})+(?!\d))/g;
+//   const retorno = clearText.replace(regex, '.');
 
-  return retorno;
-}
+//   return retorno;
+// }
 
 export function tooltipHandler(event) {
 
