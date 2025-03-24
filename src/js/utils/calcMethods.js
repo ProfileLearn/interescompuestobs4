@@ -34,6 +34,8 @@ export function numAjustado(ita = 0, num) {
   return num / (1 + (ita / 100));
 }
 
+// MOVER FUNCION RENDER A ENVETSHANDLERS
+
 export function render(element, value) {
   element.value = value;
 }

@@ -179,3 +179,8 @@ export function inputHandler(event) {
   target.value = retorno;
 
 }
+
+export function handleLoad () {
+  
+
+}

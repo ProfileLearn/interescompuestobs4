@@ -6,7 +6,7 @@ Refactorizar
 import { interes, render, numAjustado, teayt, rendimiento } from './utils/calcMethods.js'
 import { dotFormat, textToNumObject } from './utils/parser.js'
 import { obtainDomValues, tooltipHandler, handleViewMore, clear, inputHandler } from './utils/eventsHandlers.js'
-
+import { getUrlParams, setUrlParams } from './utils/urlParams.js'
 
 // Crea objetos con referencias a los elementos del formulario
 
@@ -36,6 +36,7 @@ const thrDomObject = {
 
 const porcentajes = {};
 
+//  MOVER A ENVETSHANDLERS
 
 function calHandleClick() {
 
@@ -88,11 +89,17 @@ function calHandleClick() {
 	render(thrDomObject.resultado, retornoResultadoString);
 	render(thrDomObject.resultadoNeto, netResultStr);
 	render(thrDomObject.resultadoCiclo, resultadoCicloNumStr);
+
+	setUrlParams(formNumValues, inflacion);
+
 }
+
 
 
 secDomObject.appForm.addEventListener('input', inputHandler);
 secDomObject.appForm.addEventListener('click', tooltipHandler);
+
+
 secDomObject.advanceOptions.addEventListener('change', (event) => {
 
 	primaryDomObject.inflacion.value = "";
@@ -121,8 +128,45 @@ secDomObject.advanceOptions.addEventListener('change', (event) => {
 
 })
 
-secDomObject.viewMore.addEventListener('click', () => handleViewMore(thrDomObject.resultado, porcentajes, primaryDomObject));
+document.addEventListener('DOMContentLoaded', () => {
+	const params = getUrlParams();
 
+	if (params.tna) {
+		primaryDomObject.tna.value = params.tna;
+	}
+
+	if (params.inicial) {
+		primaryDomObject.montoInicial.value = params.inicial;
+	}
+
+	if (params.plazo) {
+		primaryDomObject.plazo.value = params.plazo;
+	}
+
+	if (params.ciclos) {
+		primaryDomObject.ciclos.value = params.ciclos;
+	}
+
+	if (params.adicional) {
+		primaryDomObject.adicional.value = params.adicional;
+	}
+
+	if (params.inflacion) {
+
+		secDomObject.advanceOptions.checked = true;
+		secDomObject.advanceOptions.dispatchEvent(new Event('change'));
+		primaryDomObject.inflacion.value = params.inflacion;
+	}
+
+
+	if (params.tna && params.plazo && params.ciclos && params.inicial) {
+		const manualCalculate = new Event('click');
+		secDomObject.calculate.dispatchEvent(manualCalculate);
+	}
+})
+
+
+secDomObject.viewMore.addEventListener('click', () => handleViewMore(thrDomObject.resultado, porcentajes, primaryDomObject));
 secDomObject.calculate.addEventListener('click', calHandleClick);
 secDomObject.clear.addEventListener('click', () => clear(primaryDomObject));
 
