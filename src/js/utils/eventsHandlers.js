@@ -1,4 +1,5 @@
 import { dotFormat } from "./parser.js";
+import { tooltipsObject } from '../assets/tooltipsObject.js'
 
 export function obtainDomValues(values) {
   const objValues = {};
