@@ -6,13 +6,13 @@
   },
   "scripts": {
     "quickly-push": "git add . && git commit -m 'quickly-push' && git push",
-    "create:folders": "mkdir -p dist/js && mkdir -p dist/css",
+    "create:folders": "mkdir -p dist/js/utils dist/js/assets dist/css",
     "copy:html": "cp ./index.html dist/index.html && cp ./favicon.ico ./dist/favicon.ico",
     "minify:js": "uglifyjs ./src/js/index.js -o dist/js/index.min.js -m && uglifyjs ./src/js/utils/calcMethods.js -o dist/js/utils/calcMethods.min.js -m && uglifyjs ./src/js/utils/eventsHandlers.js -o dist/js/utils/eventsHandlers.min.js -m && uglifyjs ./src/js/utils/parser.js -o dist/js/utils/parser.min.js -m && uglifyjs ./src/js/assets/tooltipsObject.js -o dist/js/assets/tooltipsObject.min.js -m",
     "clean:css": "cleancss -o dist/css/style.min.css ./src/css/style.css",
     "update:html": "replace './src/js/index.js' './js/index.min.js' dist/index.html && replace './src/css/style.css' './css/style.min.css' dist/index.html",
-    "update:js": "replace './utils/calcMethods.js' './utils/calcMethods.min.js' ./dist/js/index.min.js && replace './index.js' './index.min.js' ./dist/js/methods.min.js && replace './assets/tooltipsObject/.js' './index.min.js' ./dist/js/assets/tooltipsObject.min.js && replace './utils/eventsHandlers/.js' './index.min.js' ./dist/js/utils/eventsHandlers.min.js && replace './utils/parser/.js' './index.min.js' ./dist/js/utils/parser.min.js",
-    "build": "npm run create:folders && npm run copy:html && npm run minify:js && npm run clean:css && npm run update:html && npm run update:js",
+    "update:js": "replace \"./utils/calcMethods.js\" \"./utils/calcMethods.min.js\" dist/js/index.min.js && replace \"./utils/parser.js\" \"./utils/parser.min.js\" dist/js/index.min.js && replace \"./parser.js\" \"./parser.min.js\" dist/js/utils/eventsHandlers.min.js && replace \"./utils/eventsHandlers.js\" \"./utils/eventsHandlers.min.js\" dist/js/index.min.js && replace \"./assets/tooltipsObject.js\" \"./assets/tooltipsObject.min.js\" dist/js/index.min.js dist/js/utils/eventsHandlers.min.js",
+    "build": "npm run create:folders && npm run copy:html && npm run minify:js && npm run clean:css && npm run update:html && npm run update:js || ( echo 'Error: No se pudo crear la estructura de carpetas' && exit 1)",
     "production:deploy": "npm run quickly-push && npm run build &&"
   }
 }
